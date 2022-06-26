@@ -1,0 +1,38 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: API-GATEWAY
+  main:
+    web-application-type: reactive
+    allow-bean-definition-overriding: true
+  cloud:
+    gateway:
+      routes:
+        - id: DEPARTMENT-SERVICE
+          uri: lb://DEPARTMENT-SERVICE
+          predicates:
+            Path=/departments/**
+          filters:
+            - AuthFilter
+        - id: USER-SERVICE
+          uri: lb://USER-SERVICE
+          predicates:
+            Path=/users/info/**
+        - id: USER-SERVICE
+          uri: lb://USER-SERVICE
+          predicates:
+            Path=/users/**
+          filters:
+            - AuthFilter
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8888/eureka/
+  instance:
+    hostname: localhost
+

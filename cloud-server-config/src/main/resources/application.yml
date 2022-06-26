@@ -1,0 +1,29 @@
+server:
+  port: 8889
+
+#Config spring cloud read file config in folder services-config
+#https://kipalog.com/posts/Tim-hieu-Spring-Cloud-Config#:~:text=Trong%20c%C3%A1c%20h%E1%BB%87%20th%E1%BB%91ng%20ph%C3%A2n,product%2C%20...)
+#https://www.logicbig.com/tutorials/spring-framework/spring-cloud/cloud-config-with-file-system-backend.html
+#https://asbnotebook.com/spring-cloud-config-server-with-file-system/
+#file:///D:/Project_Java/Project_Example/cloud-server-config/src/main/resources/services-config
+#file:D:\\Project_Java\\Project_Example\\cloud-server-config\\src\\main\\resources\\services-config
+spring:
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/services-config
+        prefix: config
+  profiles:
+    active: native
+  application:
+    name: CLOUD-SERVICE
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8888/eureka/
+    instance:
+      hostname: localhost
